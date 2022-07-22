@@ -1,0 +1,11 @@
+version: "3.5"
+services:
+  app:
+    build: .
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    volumes:
+      - ./app:/app
+    ports:
+      - ${APP_PORT}:8080
+    command: sh -c "npm install && npm run serve"
