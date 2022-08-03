@@ -4,7 +4,7 @@
       <div class="card mb-0">
         <div class="flex justify-content-between mb-3">
           <div class="text-900 font-medium text-xl">
-            Welcome to Project Flotta Web App, You can list your registered Devices from <a href="/old-dashboard">here</a>.
+            Welcome to Project Flotta Web App, You can list your registered Devices from <a href="/devices">here</a>.
           </div>
         </div>
       </div>
