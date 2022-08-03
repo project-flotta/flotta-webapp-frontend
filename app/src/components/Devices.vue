@@ -8,7 +8,7 @@
                    :loading="loading"
                    class="mt-3"
         >
-          <Column field="id" header="Id"></Column>
+          <Column field="id" header="#" style="width: 10px"></Column>
           <Column field="name" header="Name"></Column>
         </DataTable>
       </div>
@@ -22,7 +22,7 @@ import DeviceService from "../service/DeviceService";
 export default {
   data() {
     return {
-      devices: null,
+      devices: [],
       loading: true,
     }
   },
@@ -32,12 +32,17 @@ export default {
   },
   mounted() {
     this.deviceService.getDevices().then(response => {
-      this.devices = response.data;
+      response.data.forEach((device) => {
+        let id = 1;
+        this.devices.push({
+          id: id++,
+          name: device
+        });
+      });
     })
     this.loading = false;
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
