@@ -9,7 +9,12 @@
                    class="mt-3"
         >
           <Column field="id" header="#" style="width: 10px"></Column>
-          <Column field="name" header="Name"></Column>
+          <Column field="name" header="Name">
+            <template #body="{data}">
+              <a :href="'/devices/' + data.name">{{data.name}}</a>
+            </template>
+          </Column>
+          <Column field="date" header="Last Update" dataType="date" style="min-width:10rem"></Column>
         </DataTable>
       </div>
     </div>
@@ -31,12 +36,13 @@ export default {
     this.deviceService = new DeviceService();
   },
   mounted() {
-    this.deviceService.getDevices().then(response => {
+    this.deviceService.listDevices().then(response => {
       response.data.forEach((device) => {
         let id = 1;
         this.devices.push({
           id: id++,
-          name: device
+          name: device,
+          date: new Date(2022, 8, 3, 9, 20)
         });
       });
     })

@@ -1,8 +1,11 @@
 <template>
   <div class="grid">
-    <div class="col-6 w-25">
+    <div class="col-8 w-255">
       <div class="card">
-        <h5>Network Topology</h5>
+        <h3>
+          Network Topology for
+          <span style="font-weight: bold; color: #4cc9f0">{{deviceName}}</span>
+        </h3>
         <v-network-graph
             :nodes="nodes"
             :edges="edges"
@@ -20,13 +23,13 @@ import DeviceService from "../service/DeviceService";
 export default {
   data() {
     return {
-      devices: null,
+      deviceName: null,
       loading: true,
       nodes: {
-        node1: {name: "N1", icon: "&#xe320" /* Laptop Mac */},
-        node2: {name: "N2", icon: "&#xe328" /* Router */},
-        node3: {name: "N3", icon: "&#xe331" /* Tablet Mac */},
-        node4: {name: "N4", icon: "&#xe2bd" /* Cloud */},
+        // node1: {name: "N1", icon: "&#xe320" /* Laptop Mac */},
+        // node2: {name: "N2", icon: "&#xe328" /* Router */},
+        // node3: {name: "N3", icon: "&#xe331" /* Tablet Mac */},
+        // node4: {name: "N4", icon: "&#xe2bd" /* Cloud */},
         // node5: {name: "N5", icon: "&#xf0e2" /* Support Agent */},
         // node6: {name: "N6", icon: "&#xea75" /* Video Settings */},
       },
@@ -50,9 +53,13 @@ export default {
         },
         node: {
           normal: {
-            color: "#4466cc88",
+            color: "#3355bb",
+          },
+          hover: {
+            color: "#4cc9f0",
           },
         },
+        // arrows configs
         edge: {
           selectable: true,
           normal: {
@@ -65,7 +72,7 @@ export default {
           },
           hover: {
             width: 4,
-            color: "#3355bb",
+            color: "#4cc9f0",
             dasharray: "0",
             linecap: "butt",
             animate: false,
@@ -73,7 +80,7 @@ export default {
           },
           selected: {
             width: 3,
-            color: "#dd8800",
+            color: "#4cc9f0",
             dasharray: "6",
             linecap: "round",
             animate: false,
@@ -104,22 +111,34 @@ export default {
       }
     }
   },
-deviceService: null,
-    created()
-{
-  this.deviceService = new DeviceService();
-}
-,
-mounted()
-{
-  this.deviceService.getDevices().then(response => {
-    this.devices = response.data;
-  })
-  this.loading = false;
-}
-,
-methods: {
-}
+  deviceService: null,
+  created() {
+    this.deviceService = new DeviceService();
+  },
+  mounted() {
+    this.deviceName = this.$route.params.id;
+    this.deviceService.getDevice(this.deviceName).then(response => {
+      console.log("response.data", response.data.Hops);
+
+      response.data.Hops.forEach((hop) => {
+        // obj = { ...obj, ...objToAdd1 };
+        console.log("hop ", hop);
+
+        this.nodes = {
+          ...this.nodes,
+          ...{ name: hop.Address.join("").toString(), icon: "&#xe328" /* Router */}
+        };
+        // this.edges = {
+        //   ...this.edges,
+        //   ...{ source: hop.Address.join("").toString(), target: hop.NextHop.join("").toString() }
+        // };
+        console.log("nodes ", this.nodes);
+
+      });
+    })
+    this.loading = false;
+  },
+  methods: {}
 }
 </script>
 

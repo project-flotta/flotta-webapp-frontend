@@ -18,7 +18,7 @@ const routes = [
                 component: () => import('./components/Devices.vue')
             },
             {
-                path: '/device',
+                path: '/devices/:id',
                 name: 'device',
                 component: () => import('./components/Device.vue')
             },

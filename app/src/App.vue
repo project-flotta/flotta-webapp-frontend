@@ -9,7 +9,7 @@
       <div class="layout-main">
         <router-view/>
       </div>
-      <AppFooter/>
+<!--      <AppFooter/>-->
     </div>
 
     <!--    <AppConfig :layoutMode="layoutMode" @layout-change="onLayoutChange"/>-->
@@ -23,7 +23,7 @@
 import AppTopBar from './AppTopbar.vue';
 import AppMenu from './AppMenu.vue';
 // import AppConfig from './AppConfig.vue';
-import AppFooter from './AppFooter.vue';
+// import AppFooter from './AppFooter.vue';
 
 export default {
   // emits: ['change-theme'],
@@ -265,7 +265,7 @@ export default {
     'AppTopBar': AppTopBar,
     'AppMenu': AppMenu,
     // 'AppConfig': AppConfig,
-    'AppFooter': AppFooter,
+    // 'AppFooter': AppFooter,
   }
 }
 </script>

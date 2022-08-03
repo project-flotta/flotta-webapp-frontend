@@ -11,7 +11,7 @@
 		name: "AppFooter",
 		methods: {
 			footerImage() {
-				return this.$appState.darkTheme ? 'images/flotta-logo.png' : 'images/flotta-logo.png';
+				return this.$appState.darkTheme ? '../images/flotta-logo.png' : '../images/flotta-logo.png';
 			}
 		},
 		computed: {
