@@ -12,7 +12,7 @@
       <AppFooter/>
     </div>
 
-<!--    <AppConfig :layoutMode="layoutMode" @layout-change="onLayoutChange"/>-->
+    <!--    <AppConfig :layoutMode="layoutMode" @layout-change="onLayoutChange"/>-->
     <transition name="layout-mask">
       <div class="layout-mask p-component-overlay" v-if="mobileMenuActive"></div>
     </transition>
@@ -36,9 +36,14 @@ export default {
       menu: [
         {
           label: 'Home',
-          items: [{
-            label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'
-          }]
+          items: [
+            {
+              label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'
+            },
+            {
+              label: 'Devices', icon: 'pi pi-fw pi-wifi', to: '/devices'
+            }
+          ]
         },
         {
           label: 'UI Components', icon: 'pi pi-fw pi-sitemap',

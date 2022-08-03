@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import App from './App.vue';
 
 const routes = [
@@ -11,6 +11,21 @@ const routes = [
                 path: '',
                 name: 'dashboard',
                 component: () => import('./components/Dashboard.vue')
+            },
+            {
+                path: '/devices',
+                name: 'devices',
+                component: () => import('./components/Devices.vue')
+            },
+            {
+                path: '/device',
+                name: 'device',
+                component: () => import('./components/Device.vue')
+            },
+            {
+                path: '/old-dashboard',
+                name: 'old dashboard',
+                component: () => import('./components/OldDashboard.vue')
             },
             {
                 path: '/formlayout',
@@ -169,7 +184,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory('/'),
     routes,
 });
 
