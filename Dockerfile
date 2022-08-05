@@ -5,6 +5,8 @@ WORKDIR /app
 
 COPY ./app /app
 
+RUN apk add vim bash
+
 RUN npm install -g @vue/cli
 
 RUN npm install

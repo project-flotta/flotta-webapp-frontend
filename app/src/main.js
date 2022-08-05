@@ -4,6 +4,7 @@ import 'primeicons/primeicons.css';
 import 'prismjs/themes/prism-coy.css';
 import './assets/styles/layout.scss';
 import './assets/demo/flags/flags.css';
+import "v-network-graph/lib/style.css"
 
 import { createApp, reactive } from 'vue';
 import router from './router';
@@ -51,6 +52,7 @@ import Galleria from 'primevue/galleria';
 import Listbox from 'primevue/listbox';
 import MegaMenu from 'primevue/megamenu';
 import Menu from 'primevue/menu';
+import VNetworkGraph from "v-network-graph"
 import Menubar from 'primevue/menubar';
 import Message from 'primevue/message';
 import MultiSelect from 'primevue/multiselect';
@@ -109,6 +111,7 @@ app.config.globalProperties.$appState = reactive({ theme: 'lara-light-indigo', d
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' });
 app.use(ConfirmationService);
 app.use(ToastService);
+app.use(VNetworkGraph);
 app.use(router);
 
 app.directive('tooltip', Tooltip);
