@@ -6,5 +6,13 @@ export default class DeviceService {
     getDevice(id) {
         return fetch(process.env.VUE_APP_API_URL+'/devices/'+id).then(res => res.json())
     }
+
+    getDeviceNetworkData(id) {
+        return fetch(process.env.VUE_APP_API_URL+'/devices/'+id+'/network').then(res => res.json())
+    }
+
+    getDeviceCPUTempData(id) {
+        return fetch(process.env.VUE_APP_API_URL+'/devices/'+id+'/cputemp').then(res => res.json())
+    }
 }
   

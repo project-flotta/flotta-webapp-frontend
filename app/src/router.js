@@ -23,6 +23,16 @@ const routes = [
                 component: () => import('./components/Device.vue')
             },
             {
+                path: '/devices/:id/network',
+                name: 'device',
+                component: () => import('./components/Network.vue')
+            },
+            {
+                path: '/devices/:id/cputemp',
+                name: 'device',
+                component: () => import('./components/CpuTemp.vue')
+            },
+            {
                 path: '/old-dashboard',
                 name: 'old dashboard',
                 component: () => import('./components/OldDashboard.vue')

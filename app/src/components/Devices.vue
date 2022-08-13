@@ -2,15 +2,15 @@
   <div class="grid">
     <div class="col-12">
       <div class="card">
-        <h5>List Devices</h5>
+        <h4>List Devices</h4>
         <DataTable :value="devices"
                    :scrollable="false"
                    :loading="loading"
-                   class="mt-3"
+                   class="mt-4 w-100 p-3"
         >
           <Column field="id" header="#" style="width: 10px"></Column>
           <Column field="name" header="Name">
-            <template #body="{data}">
+            <template #body="{data}" style="font-size: 200px">
               <a :href="'/devices/' + data.name">{{data.name}}</a>
             </template>
           </Column>
