@@ -2,20 +2,22 @@
   <div class="grid">
     <div class="col-12 md:col-4 hover:bg-blue-200">
       <a :href="'/devices/'+ deviceName +'/network'">
-        <div class="card" >
-          <h2>Network Topology</h2>
-          <img class="img-fluid align-center" style="width: 100px; height: 100px" :src="networkImage()" alt="Network Topology"/>
+        <div class="card">
+          <h3>Network Topology</h3>
+          <img class="img-fluid align-center" style="width: 100px; height: 100px" :src="networkImage()"
+               alt="Network Topology"/>
         </div>
       </a>
     </div>
-      <div class="col-12 md:col-4 hover:bg-red-200">
-        <a :href="'/devices/'+ deviceName +'/cputemp'">
-            <div class="card" >
-              <h2>CPU Temperature</h2>
-              <img class="img-fluid align-center" style="width: 100px; height: 100px" :src="cpuImage()" alt="CPU Temperature"/>
-            </div>
-          </a>
-      </div>
+    <div class="col-12 md:col-4 hover:bg-red-200">
+      <a :href="'/devices/'+ deviceName +'/cputemp'">
+        <div class="card">
+          <h3>CPU Temperature</h3>
+          <img class="img-fluid align-center" style="width: 100px; height: 100px" :src="cpuImage()"
+               alt="CPU Temperature"/>
+        </div>
+      </a>
+    </div>
   </div>
 </template>
 

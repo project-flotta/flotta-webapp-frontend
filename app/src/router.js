@@ -24,12 +24,12 @@ const routes = [
             },
             {
                 path: '/devices/:id/network',
-                name: 'device',
+                name: 'devicenetowrk',
                 component: () => import('./components/Network.vue')
             },
             {
                 path: '/devices/:id/cputemp',
-                name: 'device',
+                name: 'devicecputemp',
                 component: () => import('./components/CpuTemp.vue')
             },
             {
