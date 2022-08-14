@@ -7,6 +7,13 @@ export default class DeviceService {
         return fetch(process.env.VUE_APP_API_URL+'/devices/'+id).then(res => res.json())
     }
 
+    getDeviceImage() {
+        return fetch('images/cpu.png').then(
+            res => res.blob()
+        );
+    }
+
+
     getDeviceNetworkData(id) {
         return fetch(process.env.VUE_APP_API_URL+'/devices/'+id+'/network').then(res => res.json())
     }

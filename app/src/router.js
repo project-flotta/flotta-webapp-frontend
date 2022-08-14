@@ -32,6 +32,9 @@ const routes = [
                 name: 'devicecputemp',
                 component: () => import('./components/CpuTemp.vue')
             },
+
+
+            // old routes, TODO:: to be removed after finishing the app
             {
                 path: '/old-dashboard',
                 name: 'old dashboard',
