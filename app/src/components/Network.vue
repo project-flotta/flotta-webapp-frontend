@@ -11,7 +11,7 @@
         <div class="col-7">
           <div class="card">
             <div class="p-card-title">
-              <h3>
+              <h2>
                 <span>
                   <img class="img-fluid align-center" style="width: 30px; height: 30px" :src="networkImage"
                     alt="Network Topology" />
@@ -19,7 +19,8 @@
                 <span>
                   Log Time: {{ graph.log_date }} {{ graph.log_time }}
                 </span>
-              </h3>
+              </h2>
+              <hr />
             </div>
             <div class="card-body">
               <v-network-graph :nodes="graph.nodes" :edges="graph.edges" :layouts="graph.layouts"
@@ -34,6 +35,17 @@
                     url(https://fonts.gstatic.com/s/materialicons/v97/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)
                     format('woff2'); }
                   </component>
+
+                  <component is="style">
+                    <!-- prettier-ignore -->
+                    .marker {
+                    fill: {{ configs.edge.normal.color }};
+                    transition: fill 0.1s linear;
+                    pointer-events: none;
+                    }
+                    .marker.hovered { fill: {{ configs.edge.hover.color }}; }
+                    .marker.selected { fill: {{ configs.edge.selected.color }}; }
+                  </component>
                 </defs>
 
                 <!-- Replace the node component -->
@@ -43,10 +55,16 @@
                   <text font-family="Material Icons" :font-size="40 * scale" fill="#ffffff" text-anchor="middle"
                     dominant-baseline="central" style="pointer-events: none" v-html="graph.nodes[nodeId].icon" />
                 </template>
+                <template #edge-overlay="{ scale, center, position, hovered, selected }">
+                  <!-- Place the triangle at the center of the edge -->
+                  <path class="marker" :class="{ hovered, selected }" d="M-5 -5 L5 0 L-5 5 Z"
+                    :transform="makeTransform(center, position, scale)" />
+                </template>
 
               </v-network-graph>
             </div>
           </div>
+          <hr />
         </div>
       </div>
     </div>
@@ -67,12 +85,12 @@ export default {
       graphs: [],
       configs: {
         view: {
-          panEnabled: true,
+          panEnabled: false,
           zoomEnabled: false,
         },
         node: {
           normal: {
-            radius: 30,           // radius of circle.      default: 16
+            radius: 28,           // radius of circle.      default: 16
             color: "#F94892",          // fill color.            default: "#4466cc"
             strokeWidth: 10,      // stroke width.          default: 0
             // strokeColor: string | undefined              // stroke color.      default: "#000000"
@@ -94,55 +112,14 @@ export default {
               borderRadius: 10,       // border radius.
             }
           },
-          // arrows configs
-          edge: {
-            selectable: true,
-            normal: {
-              width: 3,
-              color: "#4466cc",
-              dasharray: "0",
-              linecap: "butt",
-              animate: false,
-              animationSpeed: 50,
-            },
-            hover: {
-              width: 4,
-              color: "#4cc9f0",
-              dasharray: "0",
-              linecap: "butt",
-              animate: false,
-              animationSpeed: 50,
-            },
-            selected: {
-              width: 3,
-              color: "#4cc9f0",
-              dasharray: "6",
-              linecap: "round",
-              animate: false,
-              animationSpeed: 50,
-            },
-            gap: 5,
-            type: "straight",
-            margin: 2,
-            marker: {
-              source: {
-                type: "none",
-                width: 4,
-                height: 4,
-                margin: -1,
-                units: "strokeWidth",
-                color: null,
-              },
-              target: {
-                type: "arrow",
-                width: 4,
-                height: 4,
-                margin: -1,
-                units: "strokeWidth",
-                color: null,
-              },
-            },
-          },
+        },
+        // arrows configs
+        edge: {
+          selectable: true,
+          normal: { color: "#5555dd" },
+          hover: { color: "#dd5555" },
+          selected: { color: "#dddd55" },
+          gap: 10,
         },
       }
     }
@@ -178,7 +155,8 @@ export default {
           let currentHop = hopsArr[i];
           // let previousHop = hopsArr[(i+len-1)%len];
           let nextHop = hopsArr[(i + 1) % len];
-
+          y = this.getRandomY(y, 50, 150); // y position of the first node (hop)
+          console.log("y", y);
           // add nodes to graph; node = hop
           // first hop is source
           if (i === 0) {
@@ -216,12 +194,9 @@ export default {
             x: x,
             y: y,
           };
-          x += 50;
+          x += 55;
           y = y * -1; // change y direction
         }
-
-
-
         // configure configs
         tmpGraph.configs = this.configs;
         console.log("##### finaltmpGraph", tmpGraph);
@@ -232,7 +207,31 @@ export default {
     this.loading = false;
   },
   methods: {
+    getRandomY(oldValue, min, max) {
+      // preserve the sign of the old value
+      let sign = oldValue < 0 ? -1 : 1;
+      let randInt = (Math.floor(Math.random() * (max - min + 1)) + min) * sign;
+      // get random number until it is different from the old value
+      if (oldValue === randInt || (oldValue + 30) > randInt) {
+        return this.getRandomY(oldValue, min, max);
+      } else {
+        return randInt;
+      }
+    },
 
+    makeTransform(center, edgePos, scale) {
+      const radian = Math.atan2(
+        edgePos.target.y - edgePos.source.y,
+        edgePos.target.x - edgePos.source.x
+      )
+      const degree = (radian * 180.0) / Math.PI
+
+      return [
+        `translate(${center.x} ${center.y})`,
+        `scale(${scale}, ${scale})`,
+        `rotate(${degree})`,
+      ].join(" ")
+    }
   }
 }
 </script>
