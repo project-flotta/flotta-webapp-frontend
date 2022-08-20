@@ -15,7 +15,7 @@ export default class DeviceService {
 
 
     getDeviceNetworkData(id) {
-        return fetch(process.env.VUE_APP_API_URL+'/devices/'+id+'/network').then(res => res.json())
+        return fetch(process.env.VUE_APP_API_URL + '/devices/' + id +'/network?lines=2').then(res => res.json())
     }
 
     getDeviceCPUTempData(id) {
