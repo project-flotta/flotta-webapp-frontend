@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-topbar" style="background-color: #4cc9f0">
+  <div class="layout-topbar">
     <router-link to="/" class="layout-topbar-logo">
       <img id="logo" alt="Project Flotta" :src="flottaImage"/>
       <!--      <span>Project Flotta</span>-->
@@ -34,9 +34,16 @@ export default {
 
 <style scoped>
 #logo {
-  height: 5rem;
+  height: 6rem;
 }
 
+.layout-topbar {
+  background-color: #4cc9f0;
+  height: 6rem;
+}
+.layout-topbar .layout-topbar-button i {
+  font-size: 2rem !important;
+}
 .layout-topbar .layout-topbar-logo {
   width: 230px;
 }
