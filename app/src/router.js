@@ -23,6 +23,19 @@ const routes = [
                 component: () => import('./components/Device.vue')
             },
             {
+                path: '/devices/:id/network',
+                name: 'devicenetowrk',
+                component: () => import('./components/Network.vue')
+            },
+            {
+                path: '/devices/:id/cputemp',
+                name: 'devicecputemp',
+                component: () => import('./components/CpuTemp.vue')
+            },
+
+
+            // old routes, TODO:: to be removed after finishing the app
+            {
                 path: '/old-dashboard',
                 name: 'old dashboard',
                 component: () => import('./components/OldDashboard.vue')
