@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import EventBus from './AppEventBus';
+// import EventBus from '../AppEventBus';
 
 export default {
     themeChangeListener: null,
@@ -26,10 +26,10 @@ export default {
             this.$appState.darkTheme = event.dark;
         };
 
-        EventBus.on('theme-change', this.themeChangeListener);
+        // EventBus.on('theme-change', this.themeChangeListener);
     },
-    beforeUnmount() {
-        EventBus.off('theme-change', this.themeChangeListener);
-    }
+    // beforeUnmount() {
+    //     EventBus.off('theme-change', this.themeChangeListener);
+    // }
 }
 </script>
