@@ -1,10 +1,28 @@
 <template>
-  <h2>
+  <h1>
     Network Topology for
     <span style="font-weight: bold; color: #4cc9f0">{{ deviceName }}</span>
-  </h2>
+  </h1>
   <hr>
   <div class="container">
+    <!--   Filter Part   -->
+    <div class="card">
+      <h2>
+        Filters
+      </h2>
+      <hr/>
+      <div class="col-6 text-left">
+        <h4>Number Of Logs</h4>
+        <Dropdown id="numOfLogs"
+                  :options="filters.logs"
+                  optionLabel="label"
+                  @change="onNumberChange($event)"
+                  placeholder="2"
+        >
+        </Dropdown>
+      </div>
+    </div>
+    <!-- Graphs Part   -->
     <div class="row">
       <!--   Graph Start     -->
       <div v-for="graph in graphs" v-bind:key="graph">
@@ -14,17 +32,17 @@
               <h2>
                 <span>
                   <img class="img-fluid align-center" style="width: 30px; height: 30px" :src="networkImage"
-                    alt="Network Topology" />
+                       alt="Network Topology"/>
                 </span>
                 <span>
                   Log Time: {{ graph.log_date }} {{ graph.log_time }}
                 </span>
               </h2>
-              <hr />
+              <hr/>
             </div>
             <div class="card-body">
               <v-network-graph :nodes="graph.nodes" :edges="graph.edges" :layouts="graph.layouts"
-                :configs="graph.configs">
+                               :configs="graph.configs">
                 <!-- Use CSS to define references to external fonts.
                       To use CSS within SVG, use <defs>. -->
                 <defs>
@@ -50,21 +68,21 @@
 
                 <!-- Replace the node component -->
                 <template #override-node="{ nodeId, scale, config, ...slotProps }">
-                  <circle :r="config.radius * scale" :fill="config.color" v-bind="slotProps" />
+                  <circle :r="config.radius * scale" :fill="config.color" v-bind="slotProps"/>
                   <!-- &lt;!&ndash; Use v-html to interpret escape sequences for icon characters. &ndash;&gt; -->
                   <text font-family="Material Icons" :font-size="40 * scale" fill="#ffffff" text-anchor="middle"
-                    dominant-baseline="central" style="pointer-events: none" v-html="graph.nodes[nodeId].icon" />
+                        dominant-baseline="central" style="pointer-events: none" v-html="graph.nodes[nodeId].icon"/>
                 </template>
                 <template #edge-overlay="{ scale, center, position, hovered, selected }">
                   <!-- Place the triangle at the center of the edge -->
                   <path class="marker" :class="{ hovered, selected }" d="M-5 -5 L5 0 L-5 5 Z"
-                    :transform="makeTransform(center, position, scale)" />
+                        :transform="makeTransform(center, position, scale)"/>
                 </template>
 
               </v-network-graph>
             </div>
           </div>
-          <hr />
+          <hr/>
         </div>
       </div>
     </div>
@@ -81,7 +99,15 @@ export default {
     return {
       deviceName: null,
       loading: true,
+      logsNum: null,
       networkImage: networkImage,
+      filters: {
+        logs: [
+          {label: 2, value: 2},
+          {label: 5, value: 5},
+          {label: 10, value: 10}
+        ]
+      },
       graphs: [],
       configs: {
         view: {
@@ -116,9 +142,9 @@ export default {
         // arrows configs
         edge: {
           selectable: true,
-          normal: { color: "#5555dd" },
-          hover: { color: "#dd5555" },
-          selected: { color: "#dddd55" },
+          normal: {color: "#5555dd"},
+          hover: {color: "#dd5555"},
+          selected: {color: "#dddd55"},
           gap: 10,
         },
       }
@@ -131,8 +157,6 @@ export default {
   mounted() {
     this.deviceName = this.$route.params.id;
     this.deviceService.getDeviceNetworkData(this.deviceName).then(response => {
-      console.log("Start loop over graphs (response.data)", response.data);
-
       // loop over graphs
       response.data.forEach(graph => {
         let tmpGraph = {
@@ -156,7 +180,6 @@ export default {
           // let previousHop = hopsArr[(i+len-1)%len];
           let nextHop = hopsArr[(i + 1) % len];
           y = this.getRandomY(y, 50, 150); // y position of the first node (hop)
-          console.log("y", y);
           // add nodes to graph; node = hop
           // first hop is source
           if (i === 0) {
@@ -199,7 +222,6 @@ export default {
         }
         // configure configs
         tmpGraph.configs = this.configs;
-        console.log("##### finaltmpGraph", tmpGraph);
         // push to the graphs array
         this.graphs.push(tmpGraph);
       });
@@ -221,8 +243,8 @@ export default {
 
     makeTransform(center, edgePos, scale) {
       const radian = Math.atan2(
-        edgePos.target.y - edgePos.source.y,
-        edgePos.target.x - edgePos.source.x
+          edgePos.target.y - edgePos.source.y,
+          edgePos.target.x - edgePos.source.x
       )
       const degree = (radian * 180.0) / Math.PI
 
@@ -231,6 +253,23 @@ export default {
         `scale(${scale}, ${scale})`,
         `rotate(${degree})`,
       ].join(" ")
+    },
+
+    onNumberChange(event) {
+      console.log("event", event)
+      // this.logsNum = ;
+      // if query param already exist; update it with current value and reload
+      if (this.$route.query.logs === undefined || this.$route.query.logs === null ) {
+        this.$route.query.logs = event.value.value;
+        // reload the page with the new query param
+        console.log("this.$route.query.test", this.$route)
+        console.log("this.$route.query.test", window.location.pathname)
+
+      } else {
+        console.log("this.$route.query.test", this.$route.query.page)
+      }
+      // if its not exist; go to the current page with the query param
+
     }
   }
 }
