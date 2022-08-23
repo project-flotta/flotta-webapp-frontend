@@ -62,6 +62,7 @@ export default {
   },
   mounted() {
     this.deviceName = this.$route.params.id;
+    // TODO:: refactor this big func into smaller methods
     this.deviceService.getDeviceNetworkData(this.deviceName).then(response => {
       // loop over graphs
       response.data.forEach(graph => {
@@ -73,7 +74,6 @@ export default {
           layouts: {
             nodes: {},
           },
-          configs: {},
         };
 
         // loop over hops of each graph
@@ -126,8 +126,6 @@ export default {
           x += 55;
           y = y * -1; // change y direction
         }
-        // configure configs
-        tmpGraph.configs = this.configs;
         // push to the graphs array
         this.graphs.push(tmpGraph);
       });
