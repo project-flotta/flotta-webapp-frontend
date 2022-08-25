@@ -10,16 +10,15 @@
       <h2>
         Filters
       </h2>
-      <hr/>
-      <div class="col-6 text-left">
-        <h4>Number Of Logs</h4>
-        <Dropdown id="numOfLogs"
-                  :options="filters.logs"
-                  optionLabel="label"
-                  @change="onNumberChange($event)"
-                  placeholder="2"
-        >
-        </Dropdown>
+      <hr />
+      <div class="grid p-fluid mt-3">
+        <div class="field col-12 md:col-2">
+          <span class="p-float-label">
+            <Dropdown id="numOfLogsDropdown" :options="filters.logs" v-model="logsNum" optionLabel="label"
+              placeholder="Number Of Logs" @change="onNumberChange($event)">
+            </Dropdown>
+          </span>
+        </div>
       </div>
     </div>
     <!-- Graphs Part   -->
@@ -39,18 +38,18 @@ import networkImage from "../../public/images/network-svgrepo-com.svg";
 import NetworkGraph from "../components/NetworkGraph";
 
 export default {
-  components: {NetworkGraph},
+  components: { NetworkGraph },
   data() {
     return {
       deviceName: null,
       loading: true,
-      logsNum: null,
+      logsNum: { label: "2 logs in page", value: 2 },
       networkImage: networkImage,
       filters: {
         logs: [
-          {label: 2, value: 2},
-          {label: 5, value: 5},
-          {label: 10, value: 10}
+          { label: "2 logs in page", value: 2 },
+          { label: "5 logs in page", value: 5 },
+          { label: "10 logs in page", value: 10 }
         ]
       },
       graphs: [],
@@ -63,7 +62,10 @@ export default {
   mounted() {
     this.deviceName = this.$route.params.id;
     // TODO:: refactor this big func into smaller methods
-    this.deviceService.getDeviceNetworkData(this.deviceName).then(response => {
+
+    // read the current query params and pass it to the endpoint
+    const params = this.getCurrentQueryParams();
+    this.deviceService.getDeviceNetworkData(this.deviceName, params).then(response => {
       // loop over graphs
       response.data.forEach(graph => {
         let tmpGraph = {
@@ -144,22 +146,17 @@ export default {
         return randInt;
       }
     },
-
-    onNumberChange(event) {
-      console.log("event", event)
-      // this.logsNum = ;
-      // if query param already exist; update it with current value and reload
-      if (this.$route.query.logs === undefined || this.$route.query.logs === null ) {
-        // this.$route.query.logs = event.value.value;
-        // // reload the page with the new query param
-        // console.log("this.$route.query.test", this.$route)
-        // console.log("this.$route.query.test", window.location.pathname)
-
-      } else {
-        console.log("this.$route.query.test", this.$route.query.page)
+    onNumberChange() {
+      window.location.href = '?logs=' + this.logsNum.value;
+    },
+    getCurrentQueryParams() {
+      const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
+      return {
+        "logs": params.logs,
+        "date": params.date
       }
-      // if its not exist; go to the current page with the query param
-
     }
   }
 }
