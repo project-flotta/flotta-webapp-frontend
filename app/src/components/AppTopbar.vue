@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import flottaImage from "../public/images/flotta-logo.png";
+import flottaImage from "../../public/images/flotta-logo.png";
 export default {
   data() {
     return {
