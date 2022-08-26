@@ -30,4 +30,13 @@ export default {
     width: 100%;
     object-fit: cover;
   }
+
+  .gallery-panel .text {
+    color: black;
+    text-align: center;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+  }
+
 </style>

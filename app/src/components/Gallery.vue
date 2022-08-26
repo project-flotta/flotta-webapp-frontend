@@ -6,6 +6,7 @@
       <router-link :to="`feed/${photo.id}`">
         <img :src="thumbUrl(photo.filename)">
       </router-link>
+      <span class="text">{{photo.timestamp}}</span>
     </div>
   </div>
 </template>
