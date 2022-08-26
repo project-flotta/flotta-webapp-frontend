@@ -18,6 +18,15 @@
         </div>
       </a>
     </div>
+    <div class="col-12 md:col-4 hover:bg-green-200">
+      <a :href="'/devices/'+ deviceName +'/feed'">
+        <div class="card">
+          <h3>Device Feed</h3>
+          <img class="img-fluid align-center" style="width: 100px; height: 100px" :src="feedImage()"
+               alt="Devcie Feed"/>
+        </div>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -50,6 +59,9 @@ export default {
     },
     networkImage() {
       return '../images/network-svgrepo-com.svg';
+    },
+    feedImage() {
+      return '../images/feed.png';
     }
   }
 }

@@ -32,6 +32,16 @@ const routes = [
                 name: 'devicecputemp',
                 component: () => import('./pages/CpuTemp.vue')
             },
+            {
+                path: "/devices/:id/feed",
+                name: "feed",
+                component: () => import('./views/Feed.vue')
+            },
+            {
+                path: "/devices/:id/feed/:id",
+                name: "photo",
+                component: () => import('./views/Photo.vue')
+            },
         ]
     }
 ];

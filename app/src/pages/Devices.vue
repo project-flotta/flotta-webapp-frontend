@@ -27,7 +27,12 @@ import DeviceService from "../service/DeviceService";
 export default {
   data() {
     return {
-      devices: [],
+      devices: [
+        {
+          id: "1",
+          name: "EdgeDevice"
+        }
+      ],
       loading: true,
     }
   },
