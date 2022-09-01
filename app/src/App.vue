@@ -147,4 +147,7 @@ export default {
 
 <style lang="scss">
 @import './App.scss';
+.layout-menu {
+  font-size: 17px;
+}
 </style>

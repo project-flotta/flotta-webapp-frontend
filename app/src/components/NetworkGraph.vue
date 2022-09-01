@@ -1,6 +1,6 @@
 <template>
       <!--   Graph Start     -->
-        <div class="col-7">
+        <div class="col-9">
           <div class="card">
             <div class="p-card-title">
               <h2>

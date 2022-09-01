@@ -65,6 +65,7 @@ export default {
 
     // read the current query params and pass it to the endpoint
     const params = this.getCurrentQueryParams();
+    this.setLogFilterValue(params.logs)
     this.deviceService.getDeviceNetworkData(this.deviceName, params).then(response => {
       // loop over graphs
       response.data.forEach(graph => {
@@ -156,6 +157,13 @@ export default {
       return {
         "logs": params.logs,
         "date": params.date
+      }
+    },
+    setLogFilterValue(logsParam) {
+      if (logsParam === null) { // logs number not set yet
+        this.logsNum = this.filters.logs[0] // set to first log option
+      } else {
+        this.logsNum = this.filters.logs.find(o => o.value.toString() === logsParam);
       }
     }
   }
