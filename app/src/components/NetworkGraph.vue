@@ -9,7 +9,7 @@
                        alt="Network Topology"/>
                 </span>
                 <span>
-                  Log Time: {{ graph.log_date }} {{ graph.log_time }}
+                  Log Time: {{ graph.log_date }} {{ graph.log_time }} UTC
                 </span>
               </h2>
               <hr/>

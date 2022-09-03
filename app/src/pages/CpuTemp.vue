@@ -6,7 +6,7 @@
   <hr>
   <div class="container">
     <!--   Filter Part   -->
-    <div class="card">
+    <!-- <div class="card">
       <h2>
         Filters
       </h2>
@@ -14,13 +14,10 @@
       <div class="grid p-fluid mt-3">
         <div class="field col-12 md:col-2">
           <span class="p-float-label">
-            <!-- <Dropdown id="numOfLogsDropdown" :options="filters.logs" v-model="logsNum" optionLabel="label"
-              placeholder="Number Of Logs" @change="onNumberChange($event)">
-            </Dropdown> -->
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- Graphs Part   -->
     <div class="row">
       <!--   Graph Start     -->
@@ -45,7 +42,7 @@ export default {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [
           {
-            label: 'CPU Temperature',
+            label: 'CPU Temperature over the day',
             data: [65, 90, 80, 81, 56, 55, 40],
             fill: false,
             backgroundColor: '#4cc9f0',
@@ -112,9 +109,11 @@ export default {
   },
   mounted() {
     this.deviceName = this.$route.params.id;
-    // this.deviceService.getDeviceCPUTempData(this.deviceName).then(response => {
-
-    // })
+    this.deviceService.getDeviceCPUTempData(this.deviceName).then(response => {
+      this.lineData.labels = response.data.labels;
+      this.lineData.datasets[0].data = response.data.degrees;
+      this.loading = false;
+    })
     this.loading = false;
   },
   methods: {}
