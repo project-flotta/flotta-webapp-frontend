@@ -2,4 +2,5 @@
 
 app-up:
 	cp .env.example .env
-	docker-compose up
+	cp app/.env.example app/.env
+	docker-compose up -d
